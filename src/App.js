@@ -1,5 +1,8 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import { Dimmer, Loader } from "semantic-ui-react";
+import Weather from "./components/weather";
+import Forecast from "./components/forecast";
 
 function App() {
   const [lat, setLat] = useState([]);
@@ -62,22 +65,22 @@ function App() {
     }
   }
 
-  function getWeather(lat, long) {
-    return fetch(
+  async function getWeather(lat, long) {
+    return await fetch(
       `${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
     )
       .then((res) => handleResponse(res))
       .then((weather) => {
         if (Object.entries(weather).length) {
-          const mappedData = mapDataToWeatherInterface(weather);
-          console.log(mappedData);
-          return mappedData;
+          // const mappedData = mapDataToWeatherInterface(weather);
+          // console.log(mappedData);
+          return weather;
         }
       });
   }
 
-  function getForecast(lat, long) {
-    return fetch(
+  async function getForecast(lat, long) {
+    return await fetch(
       `${process.env.REACT_APP_API_URL}/forecast/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
     )
       .then((res) => handleResponse(res))
@@ -101,7 +104,22 @@ function App() {
       });
   }
 
-  return <div className="App">search bar</div>;
+  return (
+    <div className="App">
+      {weatherData && typeof weatherData === "object" ? (
+        <div>
+          <Weather weatherData={weatherData} />
+          <Forecast forecast={forecast} weatherData={weatherData} />
+        </div>
+      ) : (
+        <div>
+          <Dimmer active>
+            <Loader>Loading..</Loader>
+          </Dimmer>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default App;
