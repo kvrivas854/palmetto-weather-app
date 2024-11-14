@@ -106,10 +106,20 @@ function App() {
 
   return (
     <div className="App">
-      {weatherData && typeof weatherData === "object" ? (
+      {weatherData.main && typeof weatherData.main === "object" ? (
         <div>
           <Weather weatherData={weatherData} />
-          <Forecast forecast={forecast} weatherData={weatherData} />
+          {forecast && typeof forecast === "object" ? (
+            <div>
+              <Forecast forecast={forecast} weatherData={weatherData} />
+            </div>
+          ) : (
+            <div>
+              <Dimmer active>
+                <Loader>Loading..</Loader>
+              </Dimmer>
+            </div>
+          )}
         </div>
       ) : (
         <div>

@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.css";
 import moment from "moment";
-import { Button } from "semantic-ui-react";
 import {
   faCloud,
   faBolt,
@@ -45,14 +44,7 @@ export default function weather({ weatherData }) {
     <div className="main">
       <div className="top">
         <p className="header">{weatherData.name}</p>
-        <Button
-          className="button"
-          inverted
-          color="blue"
-          circular
-          icon="refresh"
-          onClick={refresh}
-        />
+        <button class="btn btn-blue">search</button>
       </div>
       <div className="flex">
         <p className="day">
