@@ -15,6 +15,10 @@ function App() {
       setLong(position.coords.longitude);
     });
 
+    getNestApi(lat, long).then((data) => {
+      setLocalApi(data);
+    });
+
     getWeather(lat, long)
       .then((weather) => {
         setWeatherData(weather);
@@ -23,10 +27,6 @@ function App() {
       .catch((err) => {
         setError(err.message);
       });
-
-    getNestApi(lat, long).then((data) => {
-      setLocalApi(data);
-    });
 
     getForecast(lat, long)
       .then((data) => {
