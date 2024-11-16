@@ -55,10 +55,20 @@ function App() {
 
     return mapped;
   }
-
+  function getNestApi(lat, long) {
+    console.dir("lat", lat);
+    console.dir("long", long);
+    return fetch(`${process.env.REACT_APP_NEST_API}`)
+      .then((res) => handleResponse(res))
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
   //* Handle response function that returns response in JSON, else throw err.
   function handleResponse(response) {
     if (response.ok) {
+      console.log(response);
       return response.json();
     } else {
       throw new Error("Please Enable your Location in your browser!");
@@ -67,10 +77,11 @@ function App() {
 
   async function getWeather(lat, long) {
     return await fetch(
-      `${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
+      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&lon=${long}&typeAPI=weather`
     )
-      .then((res) => handleResponse(res))
+      .then((res) => res.json())
       .then((weather) => {
+        console.log(weather);
         if (Object.entries(weather).length) {
           // const mappedData = mapDataToWeatherInterface(weather);
           // console.log(mappedData);
@@ -81,26 +92,16 @@ function App() {
 
   async function getForecast(lat, long) {
     return await fetch(
-      `${process.env.REACT_APP_API_URL}/forecast/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
+      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&lon=${long}&typeAPI=forecast`
     )
-      .then((res) => handleResponse(res))
+      .then((res) => res.json())
       .then((forecastData) => {
+        console.log(forecastData);
         if (Object.entries(forecastData).length) {
           return forecastData.list
             .filter((forecast) => forecast.dt_txt.match(/09:00:00/))
             .map(mapDataToWeatherInterface);
         }
-      });
-  }
-
-  function getNestApi(lat, long) {
-    console.dir("lat", lat);
-    console.dir("long", long);
-    return fetch(`${process.env.REACT_APP_NEST_API}`)
-      .then((res) => handleResponse(res))
-      .then((data) => {
-        console.log(data);
-        return data;
       });
   }
 
