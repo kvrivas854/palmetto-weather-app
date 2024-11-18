@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Recursive&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 .main {
   margin: 10px;
   border-radius: 20px;
-  background-color: #01579b;
+  background-color: #1f2235;
+  font-family: "Roboto-bold", sans-serif;
 }
 
 .top {
@@ -12,7 +13,6 @@
   color: whitesmoke;
   padding: 10px;
   border-radius: 20px 20px 0 0;
-  font-family: "Recursive", sans-serif;
   display: flex;
   justify-content: space-between;
 }
@@ -23,7 +23,6 @@
   margin: 10px 0px 0px 10px;
   font-size: 25px;
   border-radius: 20px 20px 0 0;
-  font-family: "Recursive", sans-serif;
 }
 
 .button {
@@ -33,16 +32,15 @@
 
 .day {
   padding: 15px;
-  color: whitesmoke;
-  font-family: "Recursive", sans-serif;
+  color: #48bb78;
   font-size: 18px;
   font-weight: 600;
 }
 
 .temp {
   padding: 15px;
-  color: whitesmoke;
-  font-family: "Recursive", sans-serif;
+  color: #48bb78;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
 }
 
@@ -53,26 +51,23 @@
 
 .sunrise-sunset {
   padding: 15px;
-  color: whitesmoke;
-  font-family: "Recursive", sans-serif;
+  color: #48bb78;
   font-size: 16px;
 }
 
 .description {
   padding: 15px;
-  color: whitesmoke;
-  font-family: "Recursive", sans-serif;
+  color: #48bb78;
   font-size: 24px;
   font-weight: 600;
 }
 
 .forecast {
   border-radius: 20px;
-  background-color: #01579b;
-  color: whitesmoke;
+  background-color: #1f2235;
+  color: #48bb78;
   padding: 10px;
   margin: 10px;
-  font-family: "Recursive", sans-serif;
   font-size: 19px;
 }
 

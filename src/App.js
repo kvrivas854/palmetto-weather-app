@@ -10,7 +10,6 @@ function App() {
   const [weatherData, setWeatherData] = useState([]);
   const [forecast, setForecast] = useState([]);
   const [error, setError] = useState(null);
-  const [localApi, setLocalApi] = useState();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -18,13 +17,9 @@ function App() {
       setLong(position.coords.longitude);
     });
 
-    getNestApi(lat, long).then((data) => {
-      setLocalApi(data);
-    });
-
     getWeather(lat, long)
       .then((weather) => {
-        setWeatherData(weather);
+        setWeatherData(weather.data);
         setError(null);
       })
       .catch((err) => {
@@ -55,20 +50,11 @@ function App() {
 
     return mapped;
   }
-  function getNestApi(lat, long) {
-    console.dir("lat", lat);
-    console.dir("long", long);
-    return fetch(`${process.env.REACT_APP_NEST_API}`)
-      .then((res) => handleResponse(res))
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
-  }
+
   //* Handle response function that returns response in JSON, else throw err.
   function handleResponse(response) {
     if (response.ok) {
-      console.log(response);
+      // { data: { }, message:'' }
       return response.json();
     } else {
       throw new Error("Please Enable your Location in your browser!");
@@ -77,14 +63,11 @@ function App() {
 
   async function getWeather(lat, long) {
     return await fetch(
-      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&lon=${long}&typeAPI=weather`
+      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&long=${long}&typeAPI=weather`
     )
-      .then((res) => res.json())
+      .then((res) => handleResponse(res))
       .then((weather) => {
-        console.log(weather);
         if (Object.entries(weather).length) {
-          // const mappedData = mapDataToWeatherInterface(weather);
-          // console.log(mappedData);
           return weather;
         }
       });
@@ -92,13 +75,12 @@ function App() {
 
   async function getForecast(lat, long) {
     return await fetch(
-      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&lon=${long}&typeAPI=forecast`
+      `${process.env.REACT_APP_NEST_API}/?lat=${lat}&long=${long}&typeAPI=forecast`
     )
-      .then((res) => res.json())
+      .then((res) => handleResponse(res))
       .then((forecastData) => {
-        console.log(forecastData);
         if (Object.entries(forecastData).length) {
-          return forecastData.list
+          return forecastData.data.list
             .filter((forecast) => forecast.dt_txt.match(/09:00:00/))
             .map(mapDataToWeatherInterface);
         }
