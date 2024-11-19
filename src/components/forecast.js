@@ -46,7 +46,7 @@ export default function Forecast(props, { weatherData }) {
         <div className="flex-forecast">
           <p>{moment(item.dt_txt).format("dddd")}</p>
 
-          <WeatherIcon style={{ fontSize: 25, marginTop: 4 }}>
+          <WeatherIcon style={{ fontSize: 25, marginTop: 10 }}>
             {weatherIcon}
           </WeatherIcon>
 
